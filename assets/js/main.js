@@ -24,9 +24,7 @@ const people = [
     { name: "Martin", role: "senior" },
     { name: "Anneli", role: "junior" }
 ]
-
-const message = ``
-
+const message = `\nHay ${people.reduce((acc, persona) => {return acc +1}, 0)} personas en el ${teamName} team.\nSus nombres son${people.map(({ name }) => ` ${name}`)}.\n${people.reduce((acc, persona) => {if(persona.role =='senior') {acc+=1} return acc;}, 0)} de ellos son senior con experiencia.`
 console.log('Ejercico _1  ->', message)
 
 
@@ -55,22 +53,26 @@ const myObjects = [
 
 const detectCollision = (objects, point) => {
 
-    for (let i = 0; i < objects.length; i++) {
+    /*for (let i = 0; i < objects.length; i++) {
         let object = objects[i]
         if (point.x >= object.x && point.x <= object.x + object.width &&
             point.y >= object.y && point.y <= object.y + object.height)
             return object
-    }
+    }*/
 
     //Comentar el for y colocar acá la respuesta
-
+    return myObjects.find(
+        ({ x, y , width, height }) =>{ 
+        const { x: pointX } = point, { x: pointY } = point;
+        return pointX >= x && pointX <= x + width && pointY >= y && pointY<= y + height
+        }
+      ) != undefined;
    // const { x: pointX, y: pointY } = point
    // return true
 
 }
 
 console.log('Ejercico _2  ->', detectCollision(myObjects, { x: 4, y: 2 }))
-
 
 /* 
 _3 (Destructuring, Arrow Functions) (2 Puntos)
@@ -90,19 +92,22 @@ const profile = {
         instagram: "https://www.instagram.com/mikemorronneverdies"
     }
 }
-
-const twitter = ``
+/*const [firstSong] = songs;
+const { title } = firstSong;*/
+const {social, social: {twitter}} = profile;
 
 console.log('Ejercico _3_a  ->', twitter); // https://twitter.com/hearsparkbox
 
 
 /*
  _3_b Convertir exampleFunction en una arrow function de una sola linea..., sugar sintax.
-*/
 
-function exampleFunction(fecha) {
+ function exampleFunction(fecha) {
     return `Code is fun, I love Javascript today: ${fecha}`;
-}
+}*/
+
+const exampleFunction = (fecha) => `Code is fun, I love Javascript today: ${fecha}`;
+
 
 console.log('Ejercicio _3_b ->', exampleFunction(Date()))
 
@@ -120,7 +125,8 @@ const operaciones = [
     { num1: 60, num2: 0 },
 ]
 
-console.log('Ejercicio _3_c ->', ``)
+
+console.log('Ejercicio _3_c ->', `${operaciones.map(({ num1, num2 }) => num1 * num2)}`)
 
 
 
@@ -156,15 +162,15 @@ const zonaB = [
 ]
 
 
-const semiFinalistasZonaA = ``
-const semiFinalistasZonaB = ``
+const semiFinalistasZonaA = zonaA.filter(({ semiFinalista }) => semiFinalista == true)
+const semiFinalistasZonaB = zonaB.filter(({ semiFinalista }) => semiFinalista == true)
 
-const semiFinal = ``
+const semiFinal = [...semiFinalistasZonaA, ...semiFinalistasZonaB]
 
-const final = ``
+const final = semiFinal.filter(({ pais }) => pais == 'Argentina' || pais == 'Brasil')
 
-const finalResultado = ``
+const finalResultado = final.map((pais) => ({...pais, goles: Math.floor(Math.random() * 101)}));
 
-const campeon = ``;
+const campeon = `El campeón es ${finalResultado[0].goles > finalResultado[1].goles ? finalResultado[0].pais : finalResultado[1].pais} `;
 
 console.log('Ejercicio _4 ->', campeon);
